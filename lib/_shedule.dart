@@ -1,6 +1,6 @@
 part of 'rsue_schedule_api.dart';
 
-Future<Map<String, Map<String, List<Map<String, String>>>>?> _getShedule(
+Future<Map<String, Map<String, List<Map<String, String>>>>?> _getSchedule(
     int faculty, int course, int group) async {
   try {
     var response = await Dio().post(htmlUrl,
@@ -11,7 +11,7 @@ Future<Map<String, Map<String, List<Map<String, String>>>>?> _getShedule(
         }));
 
     if (response.statusCode == 200) {
-      Map<String, Map<String, List<Map<String, String>>>> shedule = {};
+      Map<String, Map<String, List<Map<String, String>>>> schedule = {};
 
       List<Element>? content =
           parse(response.data.toString()).getElementById("content")?.children;
@@ -53,12 +53,12 @@ Future<Map<String, Map<String, List<Map<String, String>>>>?> _getShedule(
               weekResult[dayName] = lessonsResult;
             }
           }
-          shedule[currentWeek] = weekResult;
+          schedule[currentWeek] = weekResult;
           print("there are in ned");
         }
         print("there is outside of the");
       });
-      return shedule;
+      return schedule;
     }
   } on DioError catch (error) {
     var statusCode = error.response?.statusCode;
