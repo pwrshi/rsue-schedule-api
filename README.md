@@ -1,6 +1,6 @@
 # Библиотека для удобного общения с API расписания РГЭУ (РИНХ)
 
-Единственный класс SheduleAPI имеет несколько статичных методов:
+Единственный класс ScheduleAPI имеет несколько статичных методов:
 
 ## Получить список факультетов
 ```dart
@@ -19,8 +19,8 @@
 ### Получить расписание по факультету, курсу группе
 ```dart
   static Future<Map<String, Map<String, List<Map<String, String>>>>?>
-      getShedule(int faculty, int course, int group) =>
-          _getShedule(faculty, course, group);
+      getSchedule(int faculty, int course, int group) =>
+          _getSchedule(faculty, course, group);
 ```
 Формат расписания:
 ```json
