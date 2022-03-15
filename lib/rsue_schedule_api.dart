@@ -8,13 +8,13 @@ part '_urls.dart';
 part '_faculty.dart';
 part '_courses.dart';
 part '_groups.dart';
-part '_shedule.dart';
+part '_schedule.dart';
 
 // INFO: В методах отсчёт начинается с 1, т.к. в формочках самого ринха,
 // они тоже начинаются с 1
 
 /// Общение с API расписания РИНХа
-class SheduleAPI {
+class ScheduleAPI {
   /// Получить список факультетов
   static Future<Map<int, String>?> getFacults() => _getFaculty();
 
@@ -43,6 +43,6 @@ class SheduleAPI {
   /// }
   /// ```
   static Future<Map<String, Map<String, List<Map<String, String>>>>?>
-      getShedule(int faculty, int course, int group) =>
-          _getShedule(faculty, course, group);
+      getSchedule(int faculty, int course, int group) =>
+          _getSchedule(faculty, course, group);
 }
