@@ -26,9 +26,8 @@ Future<Map<String, Map<String, List<Map<String, String>>>>?> _getSchedule(
           Map<String, List<Map<String, String>>> weekResult = {};
 
           for (var day in week) {
-            String dayName = day.children[0].text;
-
-            if (dayName != " ") {
+            if (day.text != " ") {
+              String dayName = day.children.first.innerHtml;
               List<Map<String, String>> lessonsResult = [];
 
               day.children.asMap().forEach((idx, lesson) {
@@ -40,7 +39,6 @@ Future<Map<String, Map<String, List<Map<String, String>>>>?> _getSchedule(
                       lesson.children[3].children[0].children[0].innerHtml;
                   String type =
                       lesson.children[3].children[1].children[0].innerHtml;
-                  print("there is god");
                   lessonsResult.add({
                     "name": name,
                     "teacher": teacherName,
@@ -54,9 +52,7 @@ Future<Map<String, Map<String, List<Map<String, String>>>>?> _getSchedule(
             }
           }
           schedule[currentWeek] = weekResult;
-          print("there are in ned");
         }
-        print("there is outside of the");
       });
       return schedule;
     }
