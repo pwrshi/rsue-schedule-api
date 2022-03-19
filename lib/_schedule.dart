@@ -26,7 +26,7 @@ Future<Map<String, Map<String, List<Map<String, String>>>>?> _getSchedule(
           Map<String, List<Map<String, String>>> weekResult = {};
 
           for (var day in week) {
-            String dayName = day.text;
+            String dayName = day.children[0].text;
 
             if (dayName != " ") {
               List<Map<String, String>> lessonsResult = [];
