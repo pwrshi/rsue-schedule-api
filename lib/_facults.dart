@@ -1,6 +1,6 @@
 part of 'rsue_schedule_api.dart';
 
-Future<Map<int, String>?> _getFaculty() async {
+Future<Map<int, String>?> _getFacults() async {
   var response = await Dio().get(htmlUrl);
 
   if (response.statusCode == 200) {

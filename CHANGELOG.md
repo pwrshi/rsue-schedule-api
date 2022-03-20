@@ -1,3 +1,12 @@
 ## 0.0.1
 
 - Initial version.
+
+## 0.0.2
+
+- some fixes
+
+## 0.0.3
+
+- rename faculty to facults
+- fix readme.md
