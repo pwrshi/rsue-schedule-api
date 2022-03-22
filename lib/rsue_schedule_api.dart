@@ -51,8 +51,8 @@ class ScheduleAPI {
   ///   }
   /// }
   /// ```
-  // static Future<Map<String, Map<String, int>>?> getAllGroups() =>
-  //     _getAllGroups();
+  static Future<Map<String?, Map<String, int>>?> getAllGroups() =>
+      _getAllGroups();
 
   /// Получить готовое расписание в формате
   /// ```dart
