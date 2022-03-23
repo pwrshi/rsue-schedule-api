@@ -1,28 +1,42 @@
 # Библиотека для удобного общения с API расписания РГЭУ (РИНХ)
 
-Единственный класс ScheduleAPI имеет несколько статичных методов:
+ScheduleAPI имеет несколько методов:
 
-## Получить список факультетов
+## Список факультетов
 ```dart
   static Future<Map<int, String>?> getFacults()
 ```
-## Получить список курсов на факультете
+## Список курсов на факультете
 ```dart
   static Future<Map<int, String>?> getCourses(int faculty)
 ```
-## Получить список групп курса факультета
+## Список групп курса факультета
 ```dart
   static Future<Map<int, String>?> getGroups(int faculty, int course)
 ```
-### Получить расписание по факультету, курсу группе
+## Список групп со всех факультетов, курсов
+```dart
+  static Future<Map<String, Map<String, int>>?> getAllGroups()
+```
+Список групп предоставляется в формате
+```dart
+  {
+    "Группа": {
+      "f": номер факультета
+      "c": номер курса
+      "g": номер группа
+    }
+  } 
+```
+## Расписание по факультету, курсу группе
 ```dart
   static Future<Map<String, Map<String, List<Map<String, String>>>>?>
       getSchedule(int faculty, int course, int group)
 ```
 Формат расписания:
-```json
+```dart
 {
-"Чётная/Нечётная": {
+"Чётная/Нечётная неделя": {
     "День недели": [
         {
             "name": "Дисциплина",

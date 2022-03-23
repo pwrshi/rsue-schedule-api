@@ -1,6 +1,6 @@
 name: rsue_schedule_api
 description: Package for working with the schedule API of the RSUE 
-version: 0.0.3
+version: 0.0.4
 
 environment:
   sdk: '>=2.17.0-148.0.dev <3.0.0'

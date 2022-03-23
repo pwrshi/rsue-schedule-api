@@ -1,6 +1,6 @@
 part of 'rsue_schedule_api.dart';
 
-Future<Map<String?, Map<String, int>>?> _getAllGroups() async {
+Future<Map<String, Map<String, int>>?> _getAllGroups() async {
   Map<int, String>? facults = await _getFacults();
   facults!.remove(0);
 
@@ -13,7 +13,7 @@ Future<Map<String?, Map<String, int>>?> _getAllGroups() async {
   ///   }
   /// }
   /// ```
-  Map<String?, Map<String, int>> allGroups = {};
+  Map<String, Map<String, int>> allGroups = {};
 
   for (var faculty in facults.keys) {
     Map<int, String>? courses = await _getCourses(faculty);
@@ -24,7 +24,8 @@ Future<Map<String?, Map<String, int>>?> _getAllGroups() async {
           // Пояснение за groups[group]: в случае с .forEach запросы не
           // успевают обрабатываться и потому возвращает null, а в конструкции
           // for in нет возможности обработки map
-          groups[group]: {"f": faculty, "c": course, "g": group}
+          (groups[group] ?? (faculty * (course + 1) * (group + 1)).toString()):
+              {"f": faculty, "c": course, "g": group}
         }.entries);
       }
     }
