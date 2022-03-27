@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:week_of_year/week_of_year.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
 import 'package:dio/dio.dart';
@@ -10,24 +11,20 @@ part '_courses.dart';
 part '_groups.dart';
 part '_all_groups.dart';
 part '_schedule.dart';
+part '_schedule_type.dart';
 
-// INFO: В методах отсчёт начинается с 1, т.к. в формочках самого ринха,
-// они тоже начинаются с 1
+// INFO: В методе getFacults отсчёт начинается с 1, ибо он парсится с формочек
 
 /// Общение с API расписания РИНХа
 class ScheduleAPI {
-  /// Номер факультета
-  //late final UnsignedInt faculty;
-
-  /// Номер курса
-  //late final UnsignedInt course;
-
-  /// Номер курса
-  //late final UnsignedInt group;
-
-  /// Создаёт экземпляр API По факультету, курсу, группе
-  // ScheduleAPI(
-  //     {required this.faculty, required this.course, required this.group});
+  static Future<Schedule?> getSchedule(
+      int faculty, int course, int group) async {
+    var scheduleRaw = await _getSchedule(faculty, course, group);
+    if (scheduleRaw != null) {
+      return Schedule(scheduleRaw);
+    }
+    return null;
+  }
 
   /// Получить список факультетов
   static Future<Map<int, String>?> getFacults() => _getFacults();
@@ -71,6 +68,6 @@ class ScheduleAPI {
   /// }
   /// ```
   static Future<Map<String, Map<String, List<Map<String, String>>>>?>
-      getSchedule(int faculty, int course, int group) =>
+      getScheduleRaw(int faculty, int course, int group) =>
           _getSchedule(faculty, course, group);
 }

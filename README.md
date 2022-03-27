@@ -1,6 +1,11 @@
 # Библиотека для удобного общения с API расписания РГЭУ (РИНХ)
 
 ScheduleAPI имеет несколько методов:
+## Получить расписание в удобном для работы виде
+```dart
+static Future<Schedule?> getSchedule(
+      int faculty, int course, int group)
+```
 
 ## Список факультетов
 ```dart
@@ -28,15 +33,15 @@ ScheduleAPI имеет несколько методов:
     }
   } 
 ```
-## Расписание по факультету, курсу группе
+## Расписание по факультету, курсу группе в чистом, структурном формате
 ```dart
   static Future<Map<String, Map<String, List<Map<String, String>>>>?>
-      getSchedule(int faculty, int course, int group)
+      getScheduleRaw(int faculty, int course, int group)
 ```
 Формат расписания:
 ```dart
 {
-"Чётная/Нечётная неделя": {
+"Четная/Нечетная неделя": {
     "День недели": [
         {
             "name": "Дисциплина",
