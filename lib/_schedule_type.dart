@@ -28,7 +28,7 @@ class Subject {
       case "13:50 — 15:20 ":
         numberOfLesson = 4;
         break;
-      case "15.30 — 17:00 ":
+      case "15:30 — 17:00 ":
         numberOfLesson = 5;
         break;
       default:
