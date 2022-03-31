@@ -34,12 +34,15 @@ Future<Map<String, Map<String, List<Map<String, String>>>>?> _getSchedule(
                 if (idx != 0) {
                   String name = lesson.children[1].children[0].innerHtml;
                   String teacherName = lesson.children[2].children[0].innerHtml;
-                  String time = lesson.children[0].children[0].text;
+                  String time = lesson.children[0].children[0].innerHtml;
+                  Element subgroup = lesson.children[0].children[0].children[0];
+                  time = time.replaceAll(subgroup.outerHtml, "");
                   String room =
                       lesson.children[3].children[0].children[0].innerHtml;
                   String type =
                       lesson.children[3].children[1].children[0].innerHtml;
                   lessonsResult.add({
+                    "subgroup": subgroup.text,
                     "name": name,
                     "teacher": teacherName,
                     "time": time,

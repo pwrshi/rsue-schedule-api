@@ -7,7 +7,36 @@ class Subject {
     time = raw["time"] ?? ":(";
     name = raw["name"] ?? ":(";
     type = raw["type"] ?? ":(";
+    subgroup = raw["subgroup"] ?? ":(";
+    // const time = {
+    //   1: "8:30 — 10:00",
+    //   2: "10:10 — 11:40",
+    //   3: "11.50 — 13:20",
+    //   4: "13:50 — 15:20",
+    //   5: "15.30 — 17:00",
+    // };
+    switch (time) {
+      case "8:30 — 10:00 ":
+        numberOfLesson = 1;
+        break;
+      case "10:10 — 11:40 ":
+        numberOfLesson = 2;
+        break;
+      case "11:50 — 13:20 ":
+        numberOfLesson = 3;
+        break;
+      case "13:50 — 15:20 ":
+        numberOfLesson = 4;
+        break;
+      case "15.30 — 17:00 ":
+        numberOfLesson = 5;
+        break;
+      default:
+        numberOfLesson = 0;
+    }
   }
+  late final String subgroup;
+  late final int numberOfLesson;
   late final String name;
   late final String teacher;
   late final String time;
