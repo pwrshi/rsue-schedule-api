@@ -1,7 +1,22 @@
-part of 'rsue_schedule_api.dart';
+import 'dart:convert';
 
+import 'package:json_annotation/json_annotation.dart';
+import 'package:week_of_year/week_of_year.dart';
+
+part '_schedule_type.g.dart';
+
+@JsonSerializable()
 class Subject {
-  Subject(Map<String, String> raw) {
+  late Map<String, String> raw;
+  late String subgroup;
+  late int numberOfLesson;
+  late String name;
+  late String teacher;
+  late String time;
+  late String room;
+  late String type;
+
+  Subject(this.raw) {
     room = raw["room"] ?? ":(";
     teacher = raw["teacher"] ?? ":(";
     time = raw["time"] ?? ":(";
@@ -35,20 +50,19 @@ class Subject {
         numberOfLesson = 0;
     }
   }
-  late final String subgroup;
-  late final int numberOfLesson;
-  late final String name;
-  late final String teacher;
-  late final String time;
-  late final String room;
-  late final String type;
+  factory Subject.fromJson(Map<String, dynamic> json) =>
+      _$SubjectFromJson(json);
+
+  Map<String, dynamic> toJson() => _$SubjectToJson(this);
 }
 
+@JsonSerializable()
 class Day {
-  late final String weekdayName;
-  late final int ofWeek;
-  late final List<Subject> subjects;
-  Day(this.weekdayName, List<Map<String, String>> raw) {
+  late String weekdayName;
+  late int ofWeek;
+  late List<Subject> subjects;
+  late List<Map<String, String>> raw;
+  Day(this.weekdayName, this.raw) {
     subjects = raw.map((e) => Subject(e)).toList();
     switch (weekdayName) {
       case "Понедельник":
@@ -77,16 +91,17 @@ class Day {
         break;
     }
   }
+  factory Day.fromJson(Map<String, dynamic> json) => _$DayFromJson(json);
+
+  Map<String, dynamic> toJson() => _$DayToJson(this);
 }
 
+@JsonSerializable()
 class Schedule {
-  late final String json;
-  String toJSON() {
-    return json;
-  }
+  Map<String, Map<String, List<Map<String, String>>>> raw;
+  late Map<String, Map<int, Day>> schedule;
 
-  Schedule(Map<String, Map<String, List<Map<String, String>>>> raw) {
-    json = jsonEncode(raw);
+  Schedule(this.raw) {
     schedule = raw.map((key, value) {
       return MapEntry(key, value.map(((keyday, valueday) {
         var day = Day(keyday, valueday);
@@ -94,8 +109,6 @@ class Schedule {
       })));
     });
   }
-
-  late final Map<String, Map<int, Day>> schedule;
 
   /// Возвращает расписание на неделю, учитывая какая сейчас неделя,
   /// чётная или нечетная
@@ -105,5 +118,10 @@ class Schedule {
         : schedule["Четная неделя"]![date.weekday]);
   }
 
-  onDayByISO8106(String name) {}
+  /// Создаёт экземпляр из JSON сторки
+  factory Schedule.fromJson(String json) =>
+      _$ScheduleFromJson(jsonDecode(json));
+
+  /// Экспортирует состояние в JSON
+  String toJson() => jsonEncode(_$ScheduleToJson(this));
 }

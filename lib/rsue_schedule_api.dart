@@ -1,9 +1,10 @@
 import 'dart:convert';
 
-import 'package:week_of_year/week_of_year.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
 import 'package:dio/dio.dart';
+
+import '_schedule_type.dart';
 
 part '_urls.dart';
 part '_facults.dart';
@@ -11,7 +12,6 @@ part '_courses.dart';
 part '_groups.dart';
 part '_all_groups.dart';
 part '_schedule.dart';
-part '_schedule_type.dart';
 
 // INFO: В методе getFacults отсчёт начинается с 1, ибо он парсится с формочек
 
