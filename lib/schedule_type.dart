@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:week_of_year/week_of_year.dart';
 
-part '_schedule_type.g.dart';
+part 'schedule_type.g.dart';
 
 @JsonSerializable()
 class Subject {
@@ -100,8 +100,15 @@ class Day {
 class Schedule {
   Map<String, Map<String, List<Map<String, String>>>> raw;
   late Map<String, Map<int, Day>> schedule;
+  late DateTime createDate;
 
-  Schedule(this.raw) {
+  late int faculty;
+  late int course;
+  late int group;
+
+  Schedule(this.raw,
+      {required this.faculty, required this.course, required this.group}) {
+    createDate = DateTime.now();
     schedule = raw.map((key, value) {
       return MapEntry(key, value.map(((keyday, valueday) {
         var day = Day(keyday, valueday);

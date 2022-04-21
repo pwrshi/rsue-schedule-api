@@ -1,5 +1,6 @@
 part of 'rsue_schedule_api.dart';
 
+// Дальше бога нет
 Future<Map<String, Map<String, List<Map<String, String>>>>?> _getSchedule(
     int faculty, int course, int group) async {
   try {

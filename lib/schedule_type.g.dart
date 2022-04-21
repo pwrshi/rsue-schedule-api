@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of '_schedule_type.dart';
+part of 'schedule_type.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
@@ -58,17 +58,26 @@ Schedule _$ScheduleFromJson(Map<String, dynamic> json) => Schedule(
                       .toList()),
             )),
       ),
-    )..schedule = (json['schedule'] as Map<String, dynamic>).map(
+      faculty: json['faculty'] as int,
+      course: json['course'] as int,
+      group: json['group'] as int,
+    )
+      ..schedule = (json['schedule'] as Map<String, dynamic>).map(
         (k, e) => MapEntry(
             k,
             (e as Map<String, dynamic>).map(
               (k, e) => MapEntry(
                   int.parse(k), Day.fromJson(e as Map<String, dynamic>)),
             )),
-      );
+      )
+      ..createDate = DateTime.parse(json['createDate'] as String);
 
 Map<String, dynamic> _$ScheduleToJson(Schedule instance) => <String, dynamic>{
       'raw': instance.raw,
       'schedule': instance.schedule.map(
           (k, e) => MapEntry(k, e.map((k, e) => MapEntry(k.toString(), e)))),
+      'createDate': instance.createDate.toIso8601String(),
+      'faculty': instance.faculty,
+      'course': instance.course,
+      'group': instance.group,
     };
