@@ -1,6 +1,9 @@
-part of 'rsue_schedule_api.dart';
+import 'dart:convert';
+import 'package:dio/dio.dart';
+import '_urls.dart';
 
-Future<Map<int, String>?> _getCourses(int faculty) async {
+/// Получить список курсов по факультету
+Future<Map<int, String>?> getCourses(int faculty) async {
   var response = await Dio().post(
     queryUrl,
     data:

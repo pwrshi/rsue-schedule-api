@@ -1,6 +1,10 @@
-part of 'rsue_schedule_api.dart';
+import 'package:dio/dio.dart';
+import 'package:html/dom.dart';
+import 'package:html/parser.dart';
+import './_urls.dart';
 
-Future<Map<int, String>?> _getFacults() async {
+// Получить список факультетов
+Future<Map<int, String>?> getFacults() async {
   var response = await Dio().get(htmlUrl);
 
   if (response.statusCode == 200) {

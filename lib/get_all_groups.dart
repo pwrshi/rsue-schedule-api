@@ -1,24 +1,27 @@
-part of 'rsue_schedule_api.dart';
+import 'get_courses.dart';
+import 'get_facults.dart';
+import 'get_groups.dart';
 
-Future<Map<String, Map<String, int>>?> _getAllGroups() async {
-  Map<int, String>? facults = await _getFacults();
+/// ### Получить список групп, в формате
+/// ```dart
+/// {
+///   "Группа": {
+///     "f": номер факультета
+///     "c": номер курса
+///     "g": номер группа
+///   }
+/// }
+/// ```
+Future<Map<String, Map<String, int>>?> getAllGroups() async {
+  Map<int, String>? facults = await getFacults();
   facults!.remove(0);
 
-  /// ```dart
-  /// {
-  ///   "Группа": {
-  ///     "f": номер факультета
-  ///     "c": номер курса
-  ///     "g": номер группа
-  ///   }
-  /// }
-  /// ```
   Map<String, Map<String, int>> allGroups = {};
 
   for (var faculty in facults.keys) {
-    Map<int, String>? courses = await _getCourses(faculty);
+    Map<int, String>? courses = await getCourses(faculty);
     for (var course in courses!.keys) {
-      Map<int, String>? groups = await _getGroups(faculty, course);
+      Map<int, String>? groups = await getGroups(faculty, course);
       for (var group in groups!.keys) {
         allGroups.addEntries({
           // Пояснение за groups[group]: в случае с .forEach запросы не
