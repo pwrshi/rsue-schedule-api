@@ -44,6 +44,7 @@ Future<Map<String, Map<String, List<Map<String, String>>>>?> getScheduleRawData(
           String currentWeek = el.innerHtml;
 
           List<Element>? week = containerWeeks.children[idx + 1].children;
+
           Map<String, List<Map<String, String>>> weekResult = {};
 
           for (var day in week) {
