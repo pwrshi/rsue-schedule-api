@@ -13,8 +13,14 @@ Future<Map<String, Schedule?>?> getAllSchedules() async {
   Map<String, Schedule?>? allSchedules = {};
 
   for (var entry in allGroups.entries) {
-    Schedule? schedule =
-        await getSchedule(entry.value[0], entry.value[1], entry.value[2]);
+    Schedule? schedule;
+    try {
+      schedule =
+          await getSchedule(entry.value[0], entry.value[1], entry.value[2]);
+    } catch (e) {
+      schedule = null;
+    }
+
     // if (schedule == null) {
     //   throw Exception('Schedule for "' + entry.key + '" is null');
     // }
