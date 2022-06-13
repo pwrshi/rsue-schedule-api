@@ -1,11 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
+import 'package:rsue_schedule_api/dio.dart';
 import './_urls.dart';
 
 // Получить список факультетов
 Future<Map<int, String>?> getFacults() async {
-  var response = await Dio().get(htmlUrl);
+  var response = await getDio().get(htmlUrl);
 
   if (response.statusCode == 200) {
     Map<int, String> faculty = {};

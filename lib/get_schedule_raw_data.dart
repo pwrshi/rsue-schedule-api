@@ -3,6 +3,7 @@ import 'package:html/dom.dart';
 import 'package:html/parser.dart';
 
 import '_urls.dart';
+import 'dio.dart';
 
 // Дальше бога нет
 /// Получить **сырое** расписание в формате
@@ -24,7 +25,7 @@ import '_urls.dart';
 Future<Map<String, Map<String, List<Map<String, String>>>>?> getScheduleRawData(
     int faculty, int course, int group) async {
   try {
-    var response = await Dio().post(htmlUrl,
+    var response = await getDio().post(htmlUrl,
         data: FormData.fromMap({
           "f": faculty.toString(),
           "k": course.toString(),
