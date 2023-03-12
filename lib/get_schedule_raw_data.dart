@@ -43,8 +43,13 @@ Future<Map<String, Map<String, List<Map<String, String>>>>?> getScheduleRawData(
       containerWeeks.children.asMap().forEach((idx, el) {
         if (el.className == "ned") {
           String currentWeek = el.innerHtml;
+          List<Element>? week;
+          try {
+            week = containerWeeks.children[idx + 1].children;
+          } catch (e) {
+            throw Exception('Расписания на неделю нет');
+          }
 
-          List<Element>? week = containerWeeks.children[idx + 1].children;
           Map<String, List<Map<String, String>>> weekResult = {};
 
           for (var day in week) {
