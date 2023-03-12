@@ -1,10 +1,11 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
+import 'package:rsue_schedule_api/dio.dart';
 import '_urls.dart';
 
 /// Получить список групп, по факультету и курсу
 Future<Map<int, String>?> getGroups(int faculty, int course) async {
-  var response = await Dio().post(
+  var response = await getDio().post(
     queryUrl,
     data: FormData.fromMap({
       "query": "getCategories",

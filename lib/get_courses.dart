@@ -1,10 +1,11 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
+import 'package:rsue_schedule_api/dio.dart';
 import '_urls.dart';
 
 /// Получить список курсов по факультету
 Future<Map<int, String>?> getCourses(int faculty) async {
-  var response = await Dio().post(
+  var response = await getDio().post(
     queryUrl,
     data:
         FormData.fromMap({"query": "getKinds", "type_id": faculty.toString()}),
