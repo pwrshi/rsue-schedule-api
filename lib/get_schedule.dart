@@ -1,5 +1,4 @@
-import 'schedule_type.dart';
-import 'get_schedule_raw_data.dart';
+import 'package:rsue_schedule_api/rsue_schedule_api.dart';
 
 /// Получить **готовое** расписание в формате
 /// ```dart
@@ -17,11 +16,10 @@ import 'get_schedule_raw_data.dart';
 ///   }
 /// }
 /// ```
-Future<Schedule?> getSchedule(int faculty, int course, int group) async {
+Future<ScheduleService?> getSchedule(int faculty, int course, int group) async {
   var scheduleRaw = await getScheduleRawData(faculty, course, group);
   if (scheduleRaw != null) {
-    return Schedule(scheduleRaw,
-        faculty: faculty, course: course, group: group);
+    return ScheduleService.fromJson(scheduleRaw);
   }
   return null;
 }

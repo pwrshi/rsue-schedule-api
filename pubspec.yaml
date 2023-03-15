@@ -10,6 +10,7 @@ dependencies:
   week_of_year: ^2.0.0
   html: ^0.15.0
   dio: ^4.0.4
+  freezed_annotation: ^2.2.0
 
 dev_dependencies:
   build_runner: ^2.0.0

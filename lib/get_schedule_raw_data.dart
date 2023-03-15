@@ -24,72 +24,76 @@ import 'dio.dart';
 /// ```
 Future<Map<String, Map<String, List<Map<String, String>>>>?> getScheduleRawData(
     int faculty, int course, int group) async {
-  try {
-    var response = await getDio().post(htmlUrl,
-        data: FormData.fromMap({
-          "f": faculty.toString(),
-          "k": course.toString(),
-          "g": group.toString()
-        }));
+  var response = await getDio().post(htmlUrl,
+      options: Options(headers: {
+        "user-agent":
+            "Mozilla/5.0 (X11; Linux x86_64; rv:99.0) Gecko/20100101 Firefox/99.0"
+      }),
+      data: FormData.fromMap({
+        "f": faculty.toString(),
+        "k": course.toString(),
+        "g": group.toString()
+      }));
 
-    if (response.statusCode == 200) {
-      Map<String, Map<String, List<Map<String, String>>>> schedule = {};
+  if (response.statusCode == 200) {
+    Map<String, Map<String, List<Map<String, String>>>> schedule = {};
 
+    try {
       List<Element>? content =
           parse(response.data.toString()).getElementById("content")?.children;
-
       Element? containerWeeks = content![content.length - 1];
-
       containerWeeks.children.asMap().forEach((idx, el) {
         if (el.className == "ned") {
           String currentWeek = el.innerHtml;
-          List<Element>? week;
-          try {
-            week = containerWeeks.children[idx + 1].children;
-          } catch (e) {
-            throw Exception('Расписания на неделю нет');
-          }
 
+          List<Element>? week;
+          if (containerWeeks.children.length > (idx + 1)) {
+            week = containerWeeks.children[idx + 1].children;
+          }
           Map<String, List<Map<String, String>>> weekResult = {};
 
-          for (var day in week) {
-            if (day.text != " ") {
-              String dayName = day.children.first.innerHtml;
-              List<Map<String, String>> lessonsResult = [];
+          if (week != null) {
+            for (var day in week) {
+              if (day.text != " ") {
+                String dayName = day.children.first.innerHtml;
+                List<Map<String, String>> lessonsResult = [];
 
-              day.children.asMap().forEach((idx, lesson) {
-                if (idx != 0) {
-                  String name = lesson.children[1].children[0].innerHtml;
-                  String teacherName = lesson.children[2].children[0].innerHtml;
-                  String time = lesson.children[0].children[0].innerHtml;
-                  Element subgroup = lesson.children[0].children[0].children[0];
-                  time = time.replaceAll(subgroup.outerHtml, "");
-                  String room =
-                      lesson.children[3].children[0].children[0].innerHtml;
-                  String type =
-                      lesson.children[3].children[1].children[0].innerHtml;
-                  lessonsResult.add({
-                    "subgroup": subgroup.text,
-                    "name": name,
-                    "teacher": teacherName,
-                    "time": time,
-                    "room": room,
-                    "type": type,
-                  });
-                }
-              });
-              weekResult[dayName] = lessonsResult;
+                day.children.asMap().forEach((idx, lesson) {
+                  if (idx != 0) {
+                    String name = lesson.children[1].children[0].innerHtml;
+                    String teacherName =
+                        lesson.children[2].children[0].innerHtml;
+                    String time = lesson.children[0].children[0].innerHtml;
+                    Element subgroup =
+                        lesson.children[0].children[0].children[0];
+                    time = time.replaceAll(subgroup.outerHtml, "");
+                    String room =
+                        lesson.children[3].children[0].children[0].innerHtml;
+                    String type =
+                        lesson.children[3].children[1].children[0].innerHtml;
+                    lessonsResult.add({
+                      "subgroup": subgroup.text,
+                      "name": name,
+                      "teacher": teacherName,
+                      "time": time,
+                      "room": room,
+                      "type": type,
+                    });
+                  }
+                });
+                weekResult[dayName] = lessonsResult;
+              }
             }
           }
           schedule[currentWeek] = weekResult;
         }
       });
-      return schedule;
+    } catch (e) {
+      throw Exception("Ошибка парсинга расписания + $e");
     }
-  } on DioError catch (error) {
-    var statusCode = error.response?.statusCode;
-    print(statusCode);
-  }
 
-  return null;
+    return schedule;
+  }
+  throw Exception(
+      "Ошибка получения расписания, код сайта: ${response.statusCode}");
 }

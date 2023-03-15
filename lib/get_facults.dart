@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
 import 'package:rsue_schedule_api/dio.dart';
@@ -16,7 +15,7 @@ Future<Map<int, String>?> getFacults() async {
     Element elem = selects.first;
 
     elem.children.asMap().forEach(((idx, el) {
-      int id = int?.tryParse(el.attributes["value"] ?? "") ?? idx;
+      int id = int.tryParse(el.attributes["value"] ?? "") ?? idx;
       var value = el.text;
       faculty[id] = value;
     }));
